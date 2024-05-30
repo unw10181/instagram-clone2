@@ -1,7 +1,7 @@
 "use client";
 import styled from "styled-components";
 import { Story } from "./ProfileStoriesGrid";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import mutedIcon from "../../../../public/icons/unmute.png";
 import unmutedIcon from "../../../../public/icons/mute.png";
 import Image from "next/image";
@@ -42,7 +42,7 @@ const StyledVideo = styled.video`
   width: 100%;
   object-fit: cover;
   border-radius: 10px;
-  max-width: 300px;
+  //max-width: 300px;
 
   @media (max-width: 480px) {
     height: 35%;
@@ -64,9 +64,18 @@ const NavigationThumbnail = styled.img`
 
 const ProgressBarContainer = styled.div`
   position: relative;
+  top: 50px;
+  height: 3px;
+  width: 90%;
+  margin: auto;
+  background-color: rgb(128, 128, 128);
 `;
 
-const ProgressBar = styled.div``;
+const ProgressBar = styled.div`
+  height: 100%;
+  width: 100%;
+  background-color: white;
+`;
 
 const CurrentVideoContainer = styled.div`
   height: 70%;
@@ -75,8 +84,8 @@ const CurrentVideoContainer = styled.div`
 
 const MuteButton = styled.button`
   position: absolute;
-  top: 40px;
-  right: 100px;
+  top: 70px;
+  right: 40px;
   border: none;
   color: white;
   cursor: pointer;
@@ -105,9 +114,24 @@ export default function ProfileStoriesModal({
   setCurrentStoryIndex,
 }: ProfileStoriesModalPropTypes) {
   const [muted, setMuted] = useState<boolean>(true);
+  const [progress, setProgress] = useState<number>(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlayVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  };
 
   const hasNext: boolean = currentStoryIndex < stories.length - 1;
   const hasPrevious: boolean = currentStoryIndex > 0;
+
+  const handleProgress = (e: any) => {
+    if (isNaN(e.target.duration)) {
+      return;
+    }
+    setProgress((e.target.currentTime / e.target.duration) * 100);
+  };
 
   const goToPreviousStory = () => {
     if (hasPrevious) {
@@ -124,6 +148,10 @@ export default function ProfileStoriesModal({
   const toggleMute = () => {
     setMuted(!muted);
   };
+
+  useEffect(() => {
+    handlePlayVideo();
+  }, [currentStoryIndex]);
 
   return (
     <StoriesBackdrop>
@@ -153,9 +181,11 @@ export default function ProfileStoriesModal({
           </MuteButton>
         </div>
         <StyledVideo
+          onTimeUpdate={handleProgress}
           src={stories[currentStoryIndex].video_url}
           autoPlay
           muted={muted}
+          ref={videoRef}
         />
       </CurrentVideoContainer>
 
