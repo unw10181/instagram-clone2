@@ -67,7 +67,7 @@ export default function NavigationBar({ items }: NavigationBarProps) {
       {/* {image} */}
       <Navigation>
         {items.map((icon, index) => {
-          const isAddButton = icon.altText === "add";
+          const isAddButton = icon.altText === "Add";
 
           if (pathName != "/admin" && isAddButton) {
             return null;
