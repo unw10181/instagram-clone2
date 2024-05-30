@@ -71,10 +71,11 @@ const ProgressBarContainer = styled.div`
   background-color: rgb(128, 128, 128);
 `;
 
-const ProgressBar = styled.div`
+const ProgressBar = styled.div<{ progress: number }>`
   height: 100%;
-  width: 100%;
+  width: ${(props) => props.progress}%;
   background-color: white;
+  transition: width 0.1s linear;
 `;
 
 const CurrentVideoContainer = styled.div`
@@ -117,21 +118,8 @@ export default function ProfileStoriesModal({
   const [progress, setProgress] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handlePlayVideo = () => {
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
-  };
-
   const hasNext: boolean = currentStoryIndex < stories.length - 1;
   const hasPrevious: boolean = currentStoryIndex > 0;
-
-  const handleProgress = (e: any) => {
-    if (isNaN(e.target.duration)) {
-      return;
-    }
-    setProgress((e.target.currentTime / e.target.duration) * 100);
-  };
 
   const goToPreviousStory = () => {
     if (hasPrevious) {
@@ -150,7 +138,20 @@ export default function ProfileStoriesModal({
   };
 
   useEffect(() => {
-    handlePlayVideo();
+    const video = videoRef.current;
+    if (!video) return;
+
+    const updateProgress = () => {
+      if (video && video.duration) {
+        const progress = (video.currentTime / video.duration) * 100;
+        setProgress(progress);
+      }
+    };
+
+    video.addEventListener("timeupdate", updateProgress);
+    return () => {
+      video.removeEventListener("timeupdate", updateProgress);
+    };
   }, [currentStoryIndex]);
 
   return (
@@ -167,7 +168,7 @@ export default function ProfileStoriesModal({
       {!hasPrevious && <div></div>}
       <CurrentVideoContainer>
         <ProgressBarContainer>
-          <ProgressBar />
+          <ProgressBar progress={progress} />
         </ProgressBarContainer>
 
         <div style={{ position: "relative" }}>
@@ -181,7 +182,6 @@ export default function ProfileStoriesModal({
           </MuteButton>
         </div>
         <StyledVideo
-          onTimeUpdate={handleProgress}
           src={stories[currentStoryIndex].video_url}
           autoPlay
           muted={muted}

@@ -46,7 +46,7 @@ const Navigation = styled.aside`
   //mobile phone
   @media (max-width: 480px) {
     height: 73px;
-    bottom: 0px;
+    bottom: -20px;
   }
 `;
 
