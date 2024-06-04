@@ -66,11 +66,7 @@ export default function ProfilePhotosGridModal({
           />
         </div>
         <div className="comments-container">
-          <p>
-            {" "}
-            Now you try: display photo caption here and clone the comment
-            section
-          </p>
+          <p>{selectedPost?.caption}</p>
         </div>
       </ModalContent>
     </ModalBackDrop>
