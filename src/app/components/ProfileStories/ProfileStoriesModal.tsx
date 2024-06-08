@@ -74,6 +74,9 @@ const ProgressBarContainer = styled.div`
   width: 90%;
   margin: auto;
   background-color: rgb(128, 128, 128);
+  @media (max-width: 480px) {
+    top: 30px;
+  }
 `;
 
 const ProgressBar = styled.div<{ progress: number }>`
@@ -107,7 +110,7 @@ const MuteButton = styled.button`
 
   @media (max-width: 480px) {
     right: 10px;
-    top: 10px;
+    top: 40px;
     font-size: 12px;
   }
 `;
