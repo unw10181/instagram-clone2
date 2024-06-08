@@ -106,7 +106,7 @@ const MuteButton = styled.button`
   opacity: calc(0.7);
 
   @media (max-width: 480px) {
-    right: 50px;
+    right: 10px;
     top: 10px;
     font-size: 12px;
   }
