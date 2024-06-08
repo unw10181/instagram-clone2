@@ -20,9 +20,9 @@ const StoriesBackdrop = styled.div`
   justify-items: center;
   align-items: center;
 
-  @media (max-width: 480px) {
+  /* @media (max-width: 480px) {
     gap: 15px;
-  }
+  } */
 `;
 
 const CloseButton = styled.button`
@@ -44,10 +44,10 @@ const StyledVideo = styled.video`
   border-radius: 10px;
   //max-width: 300px;
 
-  @media (max-width: 480px) {
+  /* @media (max-width: 480px) {
     height: 35%;
     width: 100%;
-  }
+  } */
 `;
 
 const NavigationThumbnail = styled.img`
@@ -60,6 +60,11 @@ const NavigationThumbnail = styled.img`
   }
   cursor: pointer;
   max-width: 150px;
+
+  @media (max-width: 480px) {
+    width: 100%;
+    height: 20%;
+  }
 `;
 
 const ProgressBarContainer = styled.div`
@@ -81,6 +86,11 @@ const ProgressBar = styled.div<{ progress: number }>`
 const CurrentVideoContainer = styled.div`
   height: 70%;
   width: 50%;
+
+  @media (max-width: 480px) {
+    height: 35%;
+    width: 100%;
+  }
 `;
 
 const MuteButton = styled.button`
