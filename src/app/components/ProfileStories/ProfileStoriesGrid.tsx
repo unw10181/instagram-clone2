@@ -78,7 +78,7 @@ export default function ProfileStoriesGrid({
     const fetchStories = async () => {
       try {
         const response = await fetch(
-          "https://jan24-jilhslxp5q-uc.a.run.app/api/stories"
+          `${process.env.NEXT_PUBLIC_API_URL}/api/stories`,
         );
 
         if (!response.ok) {
@@ -99,10 +99,11 @@ export default function ProfileStoriesGrid({
   const deleteStory = async (storyId: number) => {
     try {
       const response = await fetch(
-        `https://jan24-jilhslxp5q-uc.a.run.app/api/stories/${storyId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/stories/${storyId}`,
+
         {
           method: "DELETE",
-        }
+        },
       );
 
       if (!response.ok) {
@@ -110,7 +111,7 @@ export default function ProfileStoriesGrid({
       }
 
       setStories((currentStory) =>
-        currentStory.filter((story) => story?.story_id !== storyId)
+        currentStory.filter((story) => story?.story_id !== storyId),
       );
     } catch (error: any) {
       console.log(error);

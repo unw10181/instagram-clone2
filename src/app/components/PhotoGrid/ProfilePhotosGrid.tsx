@@ -60,7 +60,7 @@ export default function ProfilePhotosGrid({
     const fetchPosts = async () => {
       try {
         const response: Response = await fetch(
-          "https://jan24-jilhslxp5q-uc.a.run.app/api/posts"
+          `${process.env.NEXT_PUBLIC_API_URL}/api/posts`,
         );
         if (!response.ok) {
           throw new Error("JSON not recieved");
@@ -78,10 +78,10 @@ export default function ProfilePhotosGrid({
   const deletePost = async (postId: number) => {
     try {
       const reponse: Response = await fetch(
-        `https://jan24-jilhslxp5q-uc.a.run.app/api/posts/${postId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${postId}`,
         {
           method: "DELETE",
-        }
+        },
       );
 
       if (!reponse.ok) {
@@ -89,7 +89,7 @@ export default function ProfilePhotosGrid({
       }
 
       setPosts((currentPost) =>
-        currentPost?.filter((post) => post.post_id !== postId)
+        currentPost?.filter((post) => post.post_id !== postId),
       );
     } catch (error: any) {
       console.log(error);

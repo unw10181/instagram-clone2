@@ -84,7 +84,7 @@ export default function ProfileHeader() {
     const fetchData = async () => {
       try {
         const response: Response = await fetch(
-          "https://jan24-jilhslxp5q-uc.a.run.app/api/user"
+          `${process.env.NEXT_PUBLIC_API_URL}/api/user`,
         );
         if (!response.ok) {
           throw new Error("Network response not ok");
