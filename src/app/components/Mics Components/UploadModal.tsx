@@ -118,7 +118,7 @@ export default function UploadModal({
       uploadEndPoint = "stories";
     } else {
       alert(
-        "You can only select photos for the photo feed or videos for for the stories"
+        "You can only select photos for the photo feed or videos for for the stories",
       );
       return;
     }
@@ -129,11 +129,11 @@ export default function UploadModal({
 
     try {
       const response = await fetch(
-        `https://jan24-jilhslxp5q-uc.a.run.app/api/${uploadEndPoint}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/${uploadEndPoint}`,
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
 
       if (!response.ok) {
